@@ -10,7 +10,7 @@ function MontyHall() {
     const [montyOpens, setMontyOpens] = useState(null);
     const [switchChoice, setSwitchChoice] = useState(null);
     const [result, setResult] = useState("");
-    const [autoRuns, setAutoRuns] = useState(); // מספר ההרצות באוטומט
+    const [autoRuns, setAutoRuns] = useState(""); // מספר ההרצות באוטומט
     const [autoResults, setAutoResults] = useState({ stayWins: 0, switchWins: 0 }); // תוצאות
     const [manualResults, setManualResults] = useState({ stayWins: 0, switchWins: 0, stayLose: 0, switchLose: 0 }); // תוצאות ידניות
     const [simulationState, setSimulationState] = useState("manual"); // choose, reveal, result, auto
@@ -115,6 +115,14 @@ function MontyHall() {
             );
         }
     }
+    const handleChange = (e) => {
+        const inputValue = e.target.value;
+    
+        // אם הקלט לא ריק והערך הוא מספר
+        if (inputValue === "" || !isNaN(inputValue)) {
+          setAutoRuns(inputValue);
+        }
+      };
 
     const buttons = [
         { id: 1, label: `החלף לדלת ${switchChoice + 1}`, state: switchChoice, onClick: () => finalizeChoice(switchChoice), className: "door-button" },
@@ -184,7 +192,7 @@ function MontyHall() {
                         <input
                             type="number"
                             value={autoRuns}
-                            onChange={(e) => setAutoRuns(Number(e.target.value))}
+                            onChange={handleChange}
                             placeholder="מספר סימולציות"
                             className="input-field"
                         />
