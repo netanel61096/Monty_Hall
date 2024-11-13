@@ -1,0 +1,411 @@
+
+/* קונטיינר כללי */
+.monty-hall-container {
+    font-family: 'Roboto', sans-serif;
+    max-width: 1900px;
+    margin: auto;
+    text-align: center;
+    background-color: #f7f7f7;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    font-size: 1.1rem;
+    height: 90vh;
+}
+
+/* כותרת ראשית */
+.game-title {
+    /* font-size: 2.5em; */
+    color: #354155;
+    /* font-weight: 500; */
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    font-family: "Akaya Kanadaka", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  text-shadow: 5px 5px 6px rgba(95,86,86,0.41);
+    
+}
+
+h2{
+    font-family: "Bellefair", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.door-button {
+    width: 120px;
+    height: 240px;  /* גובה הדלתות */
+    background-image: url('/public/assets/door-image.jpg');
+    background-size: cover;        /* תמלא את ה-div */
+    background-position: center;    /* מיקום התמונה במרכז */
+    background-repeat: no-repeat;   /* תמנע חזרה של התמונה */
+    border: none;
+    border-radius: 12px;
+    position: relative;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: transform 0.4s ease, box-shadow 0.3s ease;
+    margin: 20px;
+}
+.door-text {
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+    border-radius: 0 0 10px 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+    bottom: 50px; 
+    font-family: "Emilys Candy", serif;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 30px; 
+    color: rgba(49, 43, 8, 0.521);  
+  }
+  .change-door-text{
+    position: relative;
+    bottom: 134px;
+    font-size: 20px;
+    color: rgba(49, 43, 8, 0.521);
+    width: 114px;
+  }
+  .empty{
+    background: none;
+    background-color: rgb(213 211 166 / 34%);
+  }
+  .button_doors{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+  .manual-simulation{
+    height: 400px;
+  }
+  .line{
+    background-color: lightslategrey;
+    width: 600px;
+    height: 4px;
+    border-radius: 4PX;
+    /* margin: auto; */
+    margin-top: 20px;
+  }
+.manual-result{  
+    position: relative;
+    top: 100px;
+  }
+  .chosse{
+    position: relative;
+    top: 24px;
+}
+.count{
+    color: black;
+    font-size: 20px;
+}
+ /* אנימציה של גלילת טקסט מצד ימין לשמאל */
+  @keyframes scroll-text {
+    0% {
+      transform: translateX(100%); /* מתחיל מחוץ לדלת מצד ימין */
+    }
+    100% {
+      transform: translateX(-100%); /* עובר אל מחוץ לדלת מצד שמאל */
+    }
+  }
+
+.door-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* כפתורים */
+.action-button, .restart-button {
+    background: linear-gradient(284deg, #cddb89, #7f7820);
+    color: #ffffff;
+    border: none;
+    border-radius: 40px;
+    padding: 14px 35px;
+    margin: 20px 10px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+}
+
+.action-button:hover, .restart-button:hover {
+    background: linear-gradient(284deg, #7f7820, #cddb89);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transform: scale(1.1);
+}
+
+/* עיצוב גרף */
+.recharts-wrapper {
+    display: flex;
+    justify-content: center;  /* נמרכז את הגרף */
+    padding: 30px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px;
+    width: 800px;
+}
+.recharts-rectangle{
+    background-color: black;
+}
+
+.recharts-cartesian-grid line {
+    stroke: #e2e8f0;
+}
+
+.recharts-bar {
+    fill: #10b981 !important; /* צבע ירוק עדין */
+    transition: fill 0.3s ease;
+}
+
+.recharts-bar:hover {
+    fill: #34d399 !important; /* שינוי צבע ב-hover */
+}
+
+.recharts-tooltip-wrapper {
+    color: white;
+    padding: 10px;
+    font-size: 1.1rem;
+}
+
+/* עיצוב תיבת קלט */
+.input-field {
+    padding: 6px;
+    font-size: 16px;
+    border: 2px solid #d1d5db;
+    border-radius: 12px;
+    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-left: 12px;
+    transition: box-shadow 0.3s ease;
+    width: 100px;
+    height: 32px;
+}
+
+.input-field:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgb(225 198 32 / 66%);
+}
+
+.result-stage h2 {
+    color: #22c55e; /* צבע ירוק */
+}
+
+.auto-results h2, .manual-results h2 {
+    color: #ef4444; /* צבע אדום */
+}
+/* הדגשות ופוקוסים */
+.highlight {
+    font-weight: bold;
+    color: #3498db;
+    font-size: 1.25em;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.allGame{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.chartResult{
+    width: 50vw;
+}
+
+.chosse{
+    margin: auto;
+}
+.auto-results{
+    height: 290px;
+    margin: 50px;
+}
+.manual-results{
+    height: 290px;
+    margin: 50px;
+    
+}
+.custom-tooltip {
+    color: #312b05ad;
+    box-shadow: 0px 0px 16px 2px rgba(0, 0, 0, 0.58);
+    width: 130px;
+    height: 180px;
+    border-radius: 18px;
+    text-align: center;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-start;
+
+  }
+  .empty-text-in-door{
+    position: absolute;
+    top: 80px;
+  }
+  .intro{
+    margin: 10px;
+
+  }
+  .hebro{
+    direction: rtl;
+    margin: 20px 0 10px 0;
+  }
+  @media (max-width: 768px) {
+    .monty-hall-container {
+        padding: 20px;
+        height: auto;
+        font-size: 1rem;
+    }
+    .chosse{
+        margin: 0;
+        top: 12px;
+    }
+    .manual-simulation{
+        height: 230px;
+    }
+.line{
+    margin: 12px 0 0 0;
+        width: 94vw;
+
+}
+    .game-title {
+        font-size: 1.8em;
+        margin: 0px;
+    }
+
+    .door-button {
+        width: 80px;
+        height: 160px;
+        margin: 10px;
+    }
+
+    .door-text {
+        font-size: 18px;
+        bottom: 30px;
+    }
+
+    .button_doors {
+        /* flex-direction: column; */
+        align-items: center;
+    }
+
+    h2,h3{
+        font-size: 16px;
+        margin: 8px;
+    }
+
+    .action-button, .restart-button {
+        font-size: 1.0rem;
+        padding: 6px 14px;
+        margin: 0;
+    }
+
+    .recharts-wrapper {
+        width: 100%;
+        padding: 15px;
+        margin: 0;
+    }
+
+    .chartResult {
+        width: 90vw;
+    }
+
+    .auto-results, .manual-results {
+        margin: 18px;
+        height: auto;
+    }
+
+    .custom-tooltip {
+        width: 100px;
+        height: 140px;
+        font-size: 16px;
+    }
+
+    .allGame {
+        flex-direction: column;
+        align-items: center;
+    }
+    .auto-button{
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 10px;
+        justify-content: center;
+    }
+    .auto-simulation h2{
+        margin: 10px;
+    }
+    .result-title{
+        margin: 0;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    .change-door-text{
+        position: absolute;
+        font-size: 14px;
+        bottom: 146px;
+        right: -16px;
+    }
+    .count{
+        margin: 8px;
+        font-size: 1rem;
+    }
+    .auto-simulation{
+        margin-bottom: 20px;
+        
+    }
+    .manual-result{
+        top: 50px;
+    }
+    .recharts-responsive-container{
+        position: relative;
+    left: 20px;
+    }
+    .result-text{
+        font-size: 20px;
+    }
+    .mode-text{
+        margin: 0;
+        width: 110px;
+        font-size: 20px;
+        font-family: "Bellefair", serif;
+        font-weight: 600;
+        font-style: revert;
+        text-shadow: 5px 5px 6px rgba(95, 86, 86, 0.41);
+        text-align: start;
+
+    }
+    .line-result{
+        background-color: lightslategrey;
+        height: 4px;
+        border-radius: 4PX;
+        margin: 8px 0 8px 0;
+        width: 94vw;
+    }
+    .empty-text-in-door{
+        font-size: 12px;
+        width: 80px;
+    right: 16px;
+    top: 70px;
+
+    }
+    .custom-tooltip {
+        height: 20vh;
+    }
+    .door-button-father{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+    }
+
