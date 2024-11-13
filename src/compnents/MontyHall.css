@@ -271,6 +271,14 @@ input[type="number"]::-webkit-inner-spin-button {
     margin-left: 20px;
     align-items: center;
   }
+.gemes-reset{
+    float: left;
+    margin: 0;
+}
+.gemes-reset-manual{
+    margin: 0;
+}
+
   @media (max-width: 768px) {
     .monty-hall-container {
         padding: 20px;
@@ -416,6 +424,12 @@ input[type="number"]::-webkit-inner-spin-button {
         display: flex;
         flex-direction: row;
         justify-content: center;
+    }
+    .gemes-reset{
+        margin-bottom: 16px;
+    }
+    .gemes-reset-manual{
+        margin: 0;
     }
     }
 

@@ -11,7 +11,7 @@ function MontyHall() {
     const [switchChoice, setSwitchChoice] = useState(null);
     const [result, setResult] = useState("");
     const [autoRuns, setAutoRuns] = useState(""); // מספר ההרצות באוטומט
-    const [autoResults, setAutoResults] = useState({ stayWins: 0, switchWins: 0 }); // תוצאות
+    const [autoResults, setAutoResults] = useState({ stayWins: 0, switchWins: 0 ,stayLose: 0, switchLose: 0 }); // תוצאות
     const [manualResults, setManualResults] = useState({ stayWins: 0, switchWins: 0, stayLose: 0, switchLose: 0 }); // תוצאות ידניות
     const [simulationState, setSimulationState] = useState("manual"); // choose, reveal, result, auto
     const [count, setCount] = useState(0);
@@ -67,7 +67,9 @@ function MontyHall() {
     // הפעלת סימולציה אוטומטית
     const runAutoSimulations = () => {
         let stayWins = 0;
+        let stayLose = 0;
         let switchWins = 0;
+        let switchLose = 0;
         if(autoRuns<=0){
             setTextError("לא ניתן לבצע סימולציה על מספר שקטן מ-1")
             return;
@@ -87,12 +89,14 @@ function MontyHall() {
             // בדיקה אם זכה בהישארות או בהחלפה
             if (playerChoice === prizeDoor) {
                 stayWins++;
+                switchLose++;
             } else if (switchChoice === prizeDoor) {
                 switchWins++;
+                stayLose++;
             }
         }
 
-        setAutoResults({ stayWins, switchWins });
+        setAutoResults({ stayWins, switchWins ,stayLose,switchLose });
         setSimulationState("auto")
 
     };
@@ -105,7 +109,7 @@ function MontyHall() {
         };
         if (chartId === 'manual') {
             if(value>0){
-                return `${name}:  ${value}   ${(value * 100 / (count+1)).toFixed(1)}%`
+                return `${name}:  ${value}   ${(value * 100 / (count)).toFixed(1)}%`
             }
             else return ""
         };
@@ -119,6 +123,12 @@ function MontyHall() {
                 </div>
             );
         }
+    }
+    const resetGames=()=>{
+        setCount(0)
+        setAutoRuns("")
+        setManualResults({ stayWins: 0, switchWins: 0 ,stayLose: 0, switchLose: 0 })
+        setAutoResults({ stayWins: 0, switchWins: 0 ,stayLose: 0, switchLose: 0 })
     }
     const handleChange = (e) => {
         setTextError("")
@@ -215,7 +225,12 @@ function MontyHall() {
                 </div>
 
                 <div className='chartResult'>
-                <h2 className='mode-text'>תוצאות:</h2>
+            <h2 className='mode-text'>תוצאות:</h2>
+                <button 
+                    className={`${simulationState === "manual"?'gemes-reset-manual':'gemes-reset'} action-button`}
+                    onClick={resetGames}
+                >איפוס משחקים</button>
+            
 
 
                     {simulationState === "auto" && (
@@ -223,8 +238,8 @@ function MontyHall() {
                             <h2>תוצאות סימולציה אוטומטית</h2>
                             <ResponsiveContainer width="100%" height={300}>
                                 <BarChart data={[
-                                    { name: 'הישארות', wins: autoResults.stayWins, lose: autoResults.switchWins },
-                                    { name: 'החלפה', wins: autoResults.switchWins, lose: autoResults.stayWins }
+                                    { name: 'הישארות', wins: autoResults.stayWins, lose: autoResults.stayLose },
+                                    { name: 'החלפה', wins: autoResults.switchWins, lose: autoResults.switchLose }
                                 ]}
                                 >
                                     <CartesianGrid strokeDasharray="3 3" />
@@ -232,8 +247,8 @@ function MontyHall() {
                                     <YAxis tickMargin={20}/>
                                     <Tooltip content={<CustomTooltip chartId={"auto"} />} />
                                     <Legend />
-                                    <Bar dataKey="wins" barSize={30} fill="#73e1daa1" />
-                                    <Bar dataKey="lose" barSize={30} fill="#ed4e4eba" />
+                                    <Bar dataKey="wins" barSize={20} fill="#73e1daa1" />
+                                    <Bar dataKey="lose" barSize={20} fill="#ed4e4eba" />
                                 </BarChart>
                             </ResponsiveContainer>
 
@@ -243,7 +258,7 @@ function MontyHall() {
                         <div className="manual-results">
                             <div className='result-title'>
                             <h2>תוצאות משחק ידני</h2>
-                            <p className='count'>{`${count} משחקים`}</p>
+                            <p className='count'>{`${count} משחקים ידניים` }</p>
                             </div>
                             <ResponsiveContainer  height={300}>
                                 <BarChart  width={2000} data={[
