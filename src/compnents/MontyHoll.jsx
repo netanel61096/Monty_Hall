@@ -16,6 +16,7 @@ function MontyHall() {
     const [simulationState, setSimulationState] = useState("manual"); // choose, reveal, result, auto
     const [count, setCount] = useState(0);
     const [emptyText,setEmptyText]=useState("");
+    const [TextError,setTextError]= useState("")
 
     const startGame = () => {
         setPrizeDoor(Math.floor(Math.random() * 3));
@@ -67,6 +68,10 @@ function MontyHall() {
     const runAutoSimulations = () => {
         let stayWins = 0;
         let switchWins = 0;
+        if(autoRuns<=0){
+            setTextError("לא ניתן לבצע סימולציה על מספר שקטן מ-1")
+            return;
+        }
 
         for (let i = 0; i < autoRuns; i++) {
             const prizeDoor = Math.floor(Math.random() * 3);
@@ -116,6 +121,7 @@ function MontyHall() {
         }
     }
     const handleChange = (e) => {
+        setTextError("")
         const inputValue = e.target.value;
     
         // אם הקלט לא ריק והערך הוא מספר
@@ -189,6 +195,7 @@ function MontyHall() {
                     <div className="auto-simulation">
                         <h2 className='mode-text'>מצב אוטומטי:</h2>
                         <div className='auto-button'>
+                        <div className='input-and-text'>
                         <input
                             type="number"
                             value={autoRuns}
@@ -196,6 +203,8 @@ function MontyHall() {
                             placeholder="מספר סימולציות"
                             className="input-field"
                         />
+                        <div className='TextError'>{TextError}</div>
+                        </div>
                         <button onClick={runAutoSimulations} className="action-button">
                             הרץ סימולציה אוטומטית
                         </button>
